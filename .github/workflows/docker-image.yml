@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Login DockerHub
-      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" |  docker login -u "${{ secrets.DOCKERHUB_USERNAME }}"
+      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" |  docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
     - name: Build image 
       run: docker build . --file Dockerfile --tag egesa/poultry:latest
