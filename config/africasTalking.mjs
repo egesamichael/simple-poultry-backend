@@ -9,8 +9,8 @@ dotenv.config();
  *    (This uses a "sandbox" example, but replace with your real credentials if needed.)
  */
 const smsAfricasTalking = AfricasTalking({
-  apiKey: "atsk_3d814782a1460f7bb6f91a1b3e0365d2307f40fc1e086181c3d2c2886f8e423720499839",
-  username: "sandbox"
+  apiKey: "atsk_9c34b833c55e205a3a4fd67fc67664cedea8e17cdd4cc9cb18b0591de0dc1fe4ecaa1631",
+  username: "egesasimplepoultry"
 });
 
 const smsService = smsAfricasTalking.SMS;
@@ -32,14 +32,14 @@ async function sendSMSAndCall(deviceId, temp) {
     const phoneNumber = "+256787283855"; 
 
     // Build your message text
-    const message = `High Temperature Alert! Your device (${deviceId}) is ${temp}°C. Please check immediately.`;
+    const message = `Temperature change in Brooder. Your device (${deviceId}) is ${temp}°C. Please check immediately.`;
 
     console.log("📩 Sending SMS to:", phoneNumber);
     // --- 1) SEND SMS ---
     const smsResult = await smsService.send({
       to: phoneNumber,
       message,
-      from: process.env.AT_SENDER_ID || "" // If you have a sender ID, set it here
+      from: ""// If you have a sender ID, set it here
     });
     console.log("✅ SMS Sent Successfully:", smsResult);
 
