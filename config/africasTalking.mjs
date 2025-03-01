@@ -6,15 +6,15 @@ dotenv.config();
 // ✅ Initialize Africa's Talking
 const africasTalking = AfricasTalking({
   //Our API Details
-  apiKey: process.env.AT_API_KEY,
-  username: process.env.AT_USERNAME,
+  apiKey: atsk_3d814782a1460f7bb6f91a1b3e0365d2307f40fc1e086181c3d2c2886f8e423720499839,
+  username: sandbox,
 });
 
 const sendSMS = async (deviceId, temp) => {
   try {
     const message = `⚠️ High Temprature Alert! Your device (${deviceId}) is ${temp}°C Please check your device.`;
 
-    console.log("📩 Sending SMS to:", process.env.ALERT_PHONE);
+    console.log("📩 Sending SMS to:", '+256787283855');
 
     const result = await africasTalking.SMS.send({
       to: process.env.ALERT_PHONE, // Admin's phone number from .env
