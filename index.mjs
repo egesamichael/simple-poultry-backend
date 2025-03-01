@@ -1,33 +1,40 @@
 import express from "express";
 import dotenv from "dotenv";
-import sendSMS from "./config/africasTalking.mjs"; // Ensure correct import
+import cors from "cors";          // ✅ Include CORS if you want cross-domain access
+import sendSMS from "./config/africasTalking.mjs";
 
 dotenv.config();
 
 const app = express();
+
+// Middleware
 app.use(express.json());
+app.use(cors()); // ✅ Allows cross-domain requests, including from Wokwi browser console
 
-// // ✅ Add CORS Middleware (if needed)
-// import cors from "cors";
-// app.use(cors());
+// Optional: a quick health check route
+app.get("/", (req, res) => {
+  res.json({ success: true, message: "Server is running" });
+});
 
+// Main POST route
 app.post("/energy", async (req, res) => {
   const { deviceId, temp } = req.body;
 
   try {
     console.log(`📡 Received Data: Device (${deviceId}) - ${temp}°C`);
 
-    // ✅ Validate input
-    if (!deviceId || !temp) {
+    // Validate the required fields
+    if (!deviceId || typeof temp === "undefined") {
       return res.status(400).json({ success: false, error: "Missing required fields" });
     }
 
-    // ✅ Send SMS alert if usage exceeds 500W
+    // Example logic: If temperature > 25, send an SMS alert
     if (temp > 25) {
-      console.log(`⚠️ High Temprature Detected (${temp}°C)`);
+      console.log(`⚠️ High Temperature Detected (${temp}°C). Sending SMS...`);
       await sendSMS(deviceId, temp);
     }
 
+    // Return JSON response
     res.json({ success: true, message: "Data received and processed" });
   } catch (error) {
     console.error("❌ Error processing request:", error);
@@ -36,4 +43,6 @@ app.post("/energy", async (req, res) => {
 });
 
 const PORT = process.env.PORT || 6000;
-app.listen(PORT, () => console.log(`🚀 Backend running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Backend running on port ${PORT}`);
+});
