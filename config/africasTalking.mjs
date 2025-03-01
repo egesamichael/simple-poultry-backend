@@ -5,6 +5,7 @@ dotenv.config();
 
 // ✅ Initialize Africa's Talking
 const africasTalking = AfricasTalking({
+  //Our API Details
   apiKey: process.env.AT_API_KEY,
   username: process.env.AT_USERNAME,
 });
